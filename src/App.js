@@ -13,6 +13,7 @@ class App extends Component {
           <Route path='/' exact={true} component={Home}/>
           <Route path='/employees' exact={true} component={EmployeeList}/>
           <Route path='/employee/:id' component={EmployeeEdit}/>
+          {/* <Route path='/employee/new' componetn={EmployeeAdd}/> */}
 
         </Switch>
       </Router>

@@ -14,7 +14,8 @@ class EmployeeEdit extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      item: this.emptyItem
+      item: this.emptyItem,
+      put: false
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -22,9 +23,11 @@ class EmployeeEdit extends Component {
 
   async componentDidMount() {
     if (this.props.match.params.id !== 'new') {
-      const group = await (await fetch(`/api/nycgeek/employee/${this.props.match.params.id}`)).json();
+      const group = await (await fetch(`/niecey_api/v1/employees/${this.props.match.params.id}`)).json();
       this.setState({item: group});
+      // this.setState({put:true})
     }
+  
   }
 
   handleChange(event) {
@@ -40,8 +43,9 @@ class EmployeeEdit extends Component {
     event.preventDefault();
     const {item} = this.state;
 
-    await fetch('/api/nycgeek/employee', {
-      method: (item.id) ? 'PUT' : 'POST',
+if(this.state.put===true){
+    await fetch(`/niecey_api/v1/employees/${item.id}`, {
+      method:'PUT',
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json'
@@ -49,6 +53,20 @@ class EmployeeEdit extends Component {
       body: JSON.stringify(item),
     });
     this.props.history.push('/employees');
+  }
+
+  else{
+    await fetch(`/niecey_api/v1/employees/`, {
+      method:'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(item),
+    });
+    this.props.history.push('/employees');
+
+  }
   }
 
   render() {

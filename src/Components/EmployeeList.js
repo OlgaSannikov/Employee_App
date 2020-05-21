@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Button, ButtonGroup, Container, Table } from 'reactstrap';
 import AppNavbar from './AppNavBar';
 import { Link } from 'react-router-dom';
+import EmployeeEdit from "./EmployeeEdit";
 
 class EmployeeList extends Component {
 
@@ -14,13 +15,13 @@ class EmployeeList extends Component {
   componentDidMount() {
     this.setState({isLoading: true});
 
-    fetch('api/nycgeek/employees')
+    fetch('niecey_api/v1/employees/')
       .then(response => response.json())
       .then(data => this.setState({employees: data, isLoading: false}));
   }
 
   async remove(id) {
-    await fetch(`/api/nycgeek/employee/${id}`, {
+    await fetch(`/niecey_api/v1/employees/${id}`, {
       method: 'DELETE',
       headers: {
         'Accept': 'application/json',
